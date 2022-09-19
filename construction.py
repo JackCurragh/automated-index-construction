@@ -13,6 +13,14 @@ def build_index(command, fasta_path, outfile_base):
     subprocess.run([command, fasta_path, outfile_base])
 
 
+def unzip(zipped_path):
+    '''
+    decompress the file at the given path
+    '''
+    subprocess.run(['gzip', '-d', zipped_path])
+
+
+
 def get_fasta_file(directory_path, fasta_url):
     '''
     wget the fasta file from the url and place it at the directory path
@@ -28,6 +36,9 @@ def process_nc(fasta_path, output_path):
     rRNAs = []
     tRNAs = []
     uncompressed_fasta_path = '.'.join(fasta_path.split('.')[:-1])
+    if not os.path.isfile(uncompressed_fasta_path):
+        unzip(uncompressed_fasta_path)
+
     for seq_record in SeqIO.parse(uncompressed_fasta_path, "fasta"):
         if 'tRNA' in seq_record.description:
             tRNAs.append(seq_record)
@@ -85,4 +96,6 @@ def bowtie_main(index_metadata):
             # return('hi')
 
 # build_index('bowtie-build', '/home/jack/projects/tools_for_Galaxy/test-data/Yeast_rRNA.fasta.fasta', 'test/test')
-bowtie_main('bowtie_index_construction.tsv')
+# bowtie_main('bowtie_index_construction.tsv')
+
+process_nc('indices/bowtie/ncRNA/mus_musculus_m28/Mus_musculus.GRCm39.ncrna.fa.gz', 'indices/bowtie/ncRNA/mus_musculus_m28')
