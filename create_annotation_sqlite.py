@@ -31,7 +31,7 @@ if os.path.isfile("{}.sqlite".format(organism)):
 	sys.exit()
 
 
-old_exons = SqliteDict("/home/DATA/www/tripsviz/tripsviz/trips_annotations/mus_musculus/transcriptomic_to_genomic.sqlite")
+# old_exons = SqliteDict("/home/DATA/www/tripsviz/tripsviz/trips_annotations/mus_musculus/transcriptomic_to_genomic.sqlite")
 
 
 
